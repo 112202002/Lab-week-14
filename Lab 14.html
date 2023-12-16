@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    #buttonContainer {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 10px;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    #button1 { background-color: #3498db; }
+    #button2 { background-color: #e74c3c; }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    .button:active {
+      transform: scale(0.9);
+    }
+
+    #output {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 2000;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="buttonContainer">
+    <button id="button1" class="button" onclick="showInput(1)">Show 1st Input</button>
+    <button id="button2" class="button" onclick="showInput(2)">Show 2nd Input</button>
+  </div>
+
+  <!-- Add input elements -->
+  <input type="hidden" id="input1">
+  <input type="hidden" id="input2">
+
+  <div id="output"></div>
+
+  <script>
+    function showInput(inputNumber) {
+      let input;
+      if (inputNumber === 1) {
+        input = prompt("Enter the 1st input:");
+        if (input !== null) {
+          const parsedInput = parseInt(input.trim(), 10);
+          if (!isNaN(parsedInput)) {
+            document.getElementById('input1').value = parsedInput;
+            compareInputs();
+          } else {
+            alert('Please enter a valid number for the 1st input.');
+          }
+        }
+      } else {
+        input = prompt("Enter the 2nd input:");
+        if (input !== null) {
+          const parsedInput = parseInt(input.trim(), 10);
+          if (!isNaN(parsedInput)) {
+            document.getElementById('input2').value = parsedInput;
+            compareInputs();
+          } else {
+            alert('Please enter a valid number for the 2nd input.');
+          }
+        }
+      }
+    }
+
+    function compareInputs() {
+      const input1 = parseInt(document.getElementById('input1').value, 10);
+      const input2 = parseInt(document.getElementById('input2').value, 10);
+
+      const outputElement = document.getElementById('output');
+      if (!isNaN(input1) && !isNaN(input2)) {
+        if (input1 > input2) {
+          document.body.style.backgroundColor = 'lightblue';
+          outputElement.innerText = `${input1} > ${input2}`;
+        } else if (input2 > input1) {
+          document.body.style.backgroundColor = 'orange';
+          outputElement.innerText = `${input2} > ${input1}`;
+        } else {
+          document.body.style.backgroundColor = 'lightyellow';
+          outputElement.innerText = `${input2} == ${input1}`;
+        }
+        outputElement.style.display = 'block';
+      } else {
+        alert('Please enter valid numbers.');
+      }
+    }
+  </script>
+</body>
+</html>
